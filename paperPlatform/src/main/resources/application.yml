@@ -1,0 +1,33 @@
+server:
+  context-path: /paperPlatform
+  port: 8080
+spring:
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+    tomcat:
+      maxActive: 20
+      maxIdle: 10
+      initialSize: 5
+      testOnBorrow: true
+      validationInterval: 30000
+      validationQuery: select 1 from dual
+      maxAge: 300000
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate: null
+      format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+jsf:
+  primefaces:
+    theme: south-street

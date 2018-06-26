@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../layout.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panelGrid columns="15" layout="grid" style="vertical-align:middle">
+				<p:outputLabel value="境內外" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="境內" itemValue="1" />
+					<f:selectItem itemLabel="境外" itemValue="2" />
+				</p:selectOneMenu>
+				<p:outputLabel value="總代名稱" />
+				<p:inputText />
+				<p:outputLabel value="基金公司" />
+				<p:inputText />
+				<p:outputLabel value="系列" />
+				<p:inputText />
+				<p:outputLabel value="契約大分類" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="銷售主約" itemValue="1" />
+					<f:selectItem itemLabel="增補約" itemValue="2" />
+					<f:selectItem itemLabel="附屬合約" itemValue="3" />
+				</p:selectOneMenu>
+				<p:outputLabel value="契約細分類" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="費用" itemValue="1" />
+					<f:selectItem itemLabel="法規" itemValue="2" />
+					<f:selectItem itemLabel="交易流程" itemValue="3" />
+				</p:selectOneMenu>
+				<p:commandButton value="查詢" />
+				<p:commandButton value="新增" onclick="PF('createDialog').show()"
+					process="@this" />
+			</p:panelGrid>
+			<p:separator />
+			<p:dataTable value="#{contractController.master}" var="item"
+				style="text-align:center">
+				<p:column headerText="境內外">
+					<p:outputLabel value="#{item.boundry}" />
+				</p:column>
+				<p:column headerText="總代名稱">
+					<p:outputLabel value="#{item.agent}" />
+				</p:column>
+				<p:column headerText="基金公司">
+					<p:outputLabel value="#{item.fundation}" />
+				</p:column>
+				<p:column headerText="系列">
+					<p:outputLabel value="#{item.series}" />
+				</p:column>
+				<p:column headerText="生效日">
+					<p:outputLabel value="#{item.startDate}" />
+				</p:column>
+				<p:column headerText="終止日">
+					<p:outputLabel value="#{item.endDate}" />
+				</p:column>
+				<p:column headerText="大分類">
+					<p:outputLabel value="#{item.masterType}" />
+				</p:column>
+				<p:column headerText="細分類">
+					<p:outputLabel value="#{item.detailType}" />
+				</p:column>
+				<p:column headerText="摘要">
+					<p:outputLabel value="#{item.tips}" />
+				</p:column>
+				<p:column headerText="相關文件編號">
+					<p:outputLabel value="#{item.paperNo}" />
+				</p:column>
+				<p:column>
+					<p:commandButton value="編輯" onclick="PF('createDialog').show()"
+						process="@this" />
+					<p:commandButton value="異常查詢" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<h:form>
+			<p:dialog header="契約管理編輯子頁籤" widgetVar="createDialog" modal="true"
+				height="400" width="1300" appendTo="@(body)">
+				<p:panel>
+					<p:panelGrid columns="8" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-1,ui-grid-col-1, ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+						<p:outputLabel value="境內外" />
+						<p:selectOneMenu value="#{contractController.item.boundry}">
+							<f:selectItem itemLabel="境內" itemValue="1" />
+							<f:selectItem itemLabel="境外" itemValue="2" />
+						</p:selectOneMenu>
+						<p:outputLabel value="總代名稱" />
+						<p:selectOneMenu value="#{contractController.item.agent}">
+							<f:selectItem itemLabel="ALL" itemValue="1" />
+							<f:selectItem itemLabel="摩根投信" itemValue="2" />
+						</p:selectOneMenu>
+						<p:outputLabel value="基金公司" />
+						<p:selectOneMenu value="#{contractController.item.fundation}">
+							<f:selectItem itemLabel="ALL" itemValue="1" />
+							<f:selectItem itemLabel="摩根系列基金" itemValue="2" />
+						</p:selectOneMenu>
+						<p:outputLabel value="系列" />
+						<p:selectOneMenu value="#{contractController.item.series}">
+							<f:selectItem itemLabel="ALL" itemValue="1" />
+							<f:selectItem itemLabel="摩根基金(亞洲)有限公司" itemValue="2" />
+							<f:selectItem itemLabel="摩根資產管理(歐洲)有限公司" itemValue="3" />
+							<f:selectItem itemLabel="JF印度管理有限公司" itemValue="4" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2">
+						<p:outputLabel value="生效日" />
+						<p:calendar value="#{contractController.item.startDate}" />
+						<p:outputLabel value="終止日" />
+						<p:calendar value="#{contractController.item.endDate}" />
+						<p:outputLabel value="終止原因" />
+						<p:inputText value="#{contractController.item.endReason}" />
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2">
+						<p:outputLabel value="契約大分類" />
+						<p:selectOneMenu value="#{contractController.item.masterType}">
+							<f:selectItem itemLabel="銷售主約" itemValue="1" />
+							<f:selectItem itemLabel="增補約" itemValue="2" />
+							<f:selectItem itemLabel="附屬合約" itemValue="3" />
+						</p:selectOneMenu>
+						<p:outputLabel value="契約細分類" />
+						<p:selectOneMenu value="#{contractController.item.detailType}">
+							<f:selectItem itemLabel="費用" itemValue="1" />
+							<f:selectItem itemLabel="法規" itemValue="2" />
+							<f:selectItem itemLabel="交易流程" itemValue="3" />
+						</p:selectOneMenu>
+						<p:outputLabel value="契約摘要" />
+						<p:inputText value="#{contractController.item.tips}" />
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-8">
+						<p:outputLabel value="相關文件編號" />
+						<p:selectOneMenu value="#{contractController.item.paperNo}">
+							<f:selectItem itemLabel="公文" itemValue="1" />
+							<f:selectItem itemLabel="棊聯單" itemValue="2" />
+							<f:selectItem itemLabel="電聯單" itemValue="3" />
+						</p:selectOneMenu>
+						<p:inputText value="" />
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-9">
+						<p:outputLabel value="電子檔上傳" />
+						<p:fileUpload />
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+						<p:commandButton value="修改" onclick="PF('createDialog').hide()" />
+						<p:commandButton value="刪除" onclick="PF('createDialog').hide()" />
+						<p:commandButton value="取消" onclick="PF('createDialog').hide()" />
+					</p:panelGrid>
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

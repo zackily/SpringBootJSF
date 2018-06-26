@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<meta charset="utf-8" />
+		<h:outputStylesheet library="css" name="jsfcrud.css" />
+		<h:outputScript library="js" name="jsfcrud.js" />
+		<title><ui:insert name="title">文件管理平台</ui:insert></title>
+	</h:head>
+	<h:body>
+		<p:growl for="errors" showDetail="true" autoUpdate="true" />
+
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" header="文件管理平台">
+				<h:form id="menuForm">
+					<p:button href="/page/contractQuery.xhtml" value="契約管理" />
+					<p:button href="/page/paperQuery.xhtml" value="文件管理" />
+				</h:form>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south">
+				<ui:insert name="footer" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<ui:insert name="content" />
+			</p:layoutUnit>
+
+		</p:layout>
+	</h:body>
+</f:view>
+</html>
